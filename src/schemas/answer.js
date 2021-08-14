@@ -1,6 +1,6 @@
-const mongose = require('mongoose');
+const mongoose = require('mongoose');
 
-const answer = mongose.schema({
+const answer = mongoose.schema({
   _id: Number,
   is_accepted: Boolean
 });
