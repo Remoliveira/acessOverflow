@@ -8,7 +8,11 @@ QuestionRouter.get("/", (req, res) => {
 })
 
 QuestionRouter.post("/", (req, res) => {
-    questions()
+    const { site } = req.body;
+    
+    questions(site)
+
+    res.json({message: "add"})
 })
 
 module.exports = QuestionRouter;
