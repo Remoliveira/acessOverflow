@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const answer = mongoose.schema({
-  _id: Number,
+const answerSchema = mongoose.schema({
+  answer_id: String,
   is_accepted: Boolean
 });
+
+module.exports = answerSchema;
