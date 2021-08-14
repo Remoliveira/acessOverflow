@@ -1,16 +1,8 @@
 const axios = require('axios');
 
-// const questions = async (site) =>{
-//   const {data} = await axios.get(`https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`);
-//   console.log(data);
-// }
-// questions('stackoverflow');
-
-
-async function questions(site){
-  const { data } = await axios.get(`https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`);
-  
-  return await console.log(data);
+const questions = async (site) =>{
+  const {data} = await axios.get(`https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`);
+  return data.items;
 }
-// questions('stackoverflow');
+
 module.exports = questions;

@@ -1,5 +1,6 @@
 const express = require("express");
-const questions = require("../data/stackExchangeApiGetter")
+const questions = require("../data/stackExchangeApiGetter");
+const QuestionC = require('../controller/question');
 
 const QuestionRouter = express.Router();
 
@@ -8,11 +9,9 @@ QuestionRouter.get("/", (req, res) => {
 })
 
 QuestionRouter.post("/", (req, res) => {
-    const { site } = req.body;
-    
-    questions(site)
-
-    res.json({message: "add"})
+  const {site} = req.body
+  const result = QuestionC.many(site)
+  res.json(result);
 })
 
 module.exports = QuestionRouter;

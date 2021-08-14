@@ -1,4 +1,4 @@
-const mongoose = require('mongose');
+const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
     question_id: String,
