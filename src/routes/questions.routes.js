@@ -9,8 +9,8 @@ QuestionRouter.get("/", (req, res) => {
 })
 
 QuestionRouter.post("/", (req, res) => {
-  const {site} = req.body
-  const result = QuestionC.many(site)
+  const {url} = req.body
+  const result = QuestionC.many(url)
   res.json(result);
 })
 

@@ -1,10 +1,11 @@
-const question = require('../data/stackExchangeApiGetter');
+const getData = require('../data/stackExchangeApiGetter');
 const Question = require('../models/question');
 const connection = require('../database/');
 
 class QuestionC {
   async many(site){
-    const rawQuestions = await question(site);
+    const url = `https://api.stackexchange.com/2.3/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
+    const rawQuestions = await getData(url);
     let questions = [];
     for(let i = 0; i < rawQuestions.length; i++){
       const {question_id,
