@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.schema({
+const userSchema = mongoose.Schema({
   user_id: Number,
   reputation: Number,
   type: String,
   accept_rate: Number,
   diplay_name: String,
-  User_link: String,
-  badges: [{type: String,
-            badge_id: Number,
-            quantity: Number
+  link: String,
+  is_employee: String,
+  badge_counts: [{bronze: Number,
+            silver: Number,
+            gold: Number
   }]
 });
 
