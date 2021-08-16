@@ -6,7 +6,8 @@ const questionSchema = new mongoose.Schema({
     answer_count: Number,
     is_answered: Boolean,
     view_count: Number,
-    tags: [String]
+    tags: [String],
+    creation_date: Date
 });
 
 module.exports = questionSchema;
