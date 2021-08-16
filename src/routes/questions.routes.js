@@ -8,10 +8,12 @@ QuestionRouter.get("/", (req, res) => {
     res.json({message:"questions"})
 })
 
-QuestionRouter.post("/", (req, res) => {
-  const {url} = req.body
-  const result = QuestionC.many(url)
-  res.json(result);
+QuestionRouter.post("/", async (req, res) => {
+  const {site} = req.body
+  QuestionC.many(site)
+  .then((result) => {res.json({message: `${result} documents added`});})
+  .catch((result) => {res.json({error: result})})
+
 })
 
 module.exports = QuestionRouter;
