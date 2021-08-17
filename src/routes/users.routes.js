@@ -1,15 +1,18 @@
 const express = require("express");
 const UserController = require("../controller/UserController");
 
-const usersRouter = express.Router();
+const UsersRouter = express.Router();
 
-usersRouter.get("/", (req, res) => {
-
-    res.json({message:"ok"})
+UsersRouter.get("/", (req, res) => {
+  const filter = req.body;
+  userController = new UserController();
+  userController.retrieve(filter)
+  .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
+  .catch((reject) => {res.status(400).json({error: reject})});
 })
 
 
-usersRouter.post("/", (req, res) => {
+UsersRouter.post("/", (req, res) => {
 
     const { site } = req.body;
 
@@ -20,4 +23,4 @@ usersRouter.post("/", (req, res) => {
     res.json({result})
 });
 
-module.exports = usersRouter;
+module.exports = UsersRouter;

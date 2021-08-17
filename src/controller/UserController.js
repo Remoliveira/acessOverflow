@@ -10,15 +10,15 @@ class UserController{
 
         try{
             const rawUsers = await getData(url);
-            
+
             let users = []
             for (let singleUser in rawUsers){
-              
+
                 const { user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link } = rawUsers[singleUser];
                 users.push({ user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link });
-                
+
             }
-           
+
             await User.insertMany(users ,(err, docs) =>{
                 if(err) {
                   return err;
@@ -26,13 +26,17 @@ class UserController{
                 //   console.log(docs)
                   return docs.length;
                 }
-              }); 
-      
+              });
+
        }catch(err){
            console.log(err)
        }
 
-       
+
+    }
+
+    async retrieve(filter){
+      return await User.find(filter);
     }
 }
 

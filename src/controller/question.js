@@ -4,19 +4,19 @@ const Answer = require("../models/answer")
 
 
 class QuestionC {
-  
+
   constructor(){
 
-    this.answeredQuestions = []; 
+    this.answeredQuestions = [];
     this.users = []
   }
-  
+
   async many(site){
     const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
     try{
       const rawQuestions = await getData(url);
       let questions = [];
-   
+
       for(let i = 0; i < rawQuestions.length; i++){
         let {question_id,
           title,
@@ -39,11 +39,11 @@ class QuestionC {
         if( is_answered == true){
           this.answeredQuestions.push(question_id)
         }
-        // console.log(owner.user_id) 
+        // console.log(owner.user_id)
         this.users.push(owner.user_id)
-        
+
       }
-      
+
       this.getAnswers(site)
 
 
@@ -63,23 +63,23 @@ class QuestionC {
   }
 
   async getAnswers(site){
-    
+
     for(let single of this.answeredQuestions){
-      
+
       const urlAnswers = `https://api.stackexchange.com/2.3/questions/${single}/answers?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
       // console.log(single)
 
       try{
-        
+
         let answers = []
 
         const rawAnswers = await getData(urlAnswers);
         for(let answer of rawAnswers){
-          
+
           let { answer_id, question_id, is_accepted, score, creation_date, owner } = answer;
-          
+
           answers.push({ answer_id, question_id, is_accepted, score, creation_date, owner });
-          
+
           this.users.push(owner.user_id)
         }
         // console.log(answers)
@@ -93,7 +93,7 @@ class QuestionC {
             return docs.length;
           }
         });
-        
+
 
       }catch(err){
         console.log(err)
@@ -105,21 +105,21 @@ class QuestionC {
 
   async getUsers(site){
 
-    
+
     for(let id of this.users){
 
       const urlUsers = `https://api.stackexchange.com/2.3/users/${id}?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
 
       try{
-        
+
         let fullUsers = [];
-        const rawUsers = await getData(urlUsers) 
-        
+        const rawUsers = await getData(urlUsers)
+
         console.log(rawUsers)
-        
+
         let { user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link } = rawUsers[0];
         fullUsers.push({ user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link })
-        
+
         // console.log(user_id)
 
       }catch(err){
@@ -132,11 +132,15 @@ class QuestionC {
   }
 
   async getAcceptAnswer(){
-    
+
   }
 
   //pegar resposta aceita e usuarios
-  
+
+  async retrieve(filter){
+    return await Question.find(filter);
+  }
+
 }
 
 module.exports= new QuestionC();

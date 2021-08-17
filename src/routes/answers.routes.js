@@ -4,7 +4,10 @@ const AnswerC = require('../controller/answer');
 const AnswersRouter = express.Router();
 
 AnswersRouter.get("/", (req, res) => {
-    res.json({message: "answers"});
+  const filter = req.body;
+  AnswerC.retrieve(filter)
+  .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
+  .catch((reject) => {res.status(400).json({error: reject})})
 });
 
 AnswersRouter.post('/', (req, res) => {

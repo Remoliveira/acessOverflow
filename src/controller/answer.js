@@ -21,6 +21,10 @@ class AnswerC {
       }
     });
   }
+
+  async retrieve(filter){
+    return await Answer.find(filter);
+  }
 }
 
 module.exports = new AnswerC();
