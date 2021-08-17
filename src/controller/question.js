@@ -1,7 +1,7 @@
 const getData = require('../data/stackExchangeApiGetter');
 const Question = require('../models/question');
-const Answer = require("../models/answer")
-
+const Answer = require("../models/answer");
+const User = require("../models/user");
 
 class QuestionC {
 
@@ -43,7 +43,9 @@ class QuestionC {
         this.users.push(owner.user_id)
 
       }
-
+      setTimeout(() => {
+        // console.log("-------------") 
+      }, 5000);
       this.getAnswers(site)
 
 
@@ -99,20 +101,23 @@ class QuestionC {
         console.log(err)
       }
     }
-
+    setTimeout(() => {
+      // console.log("-------------")  
+    }, 5000);
     this.getUsers(site)
   }
 
   async getUsers(site){
 
+    let fullUsers = [];
 
     for(let id of this.users){
-
-      const urlUsers = `https://api.stackexchange.com/2.3/users/${id}?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
+      console.log(id)
+      const urlUsers = `https://api.stackexchange.com/2.3/users/${id}?key=xwgkMlxkdZODgnbso7g77Q((&order=desc&sort=reputation&site=${site}`
 
       try{
 
-        let fullUsers = [];
+        
         const rawUsers = await getData(urlUsers)
 
         console.log(rawUsers)
@@ -127,8 +132,17 @@ class QuestionC {
       }
 
     }
-    console.log("here")
-    console.log(fullUsers)
+
+    await User.insertMany(fullUsers, (err, docs) =>{
+      if(err) {
+        return err;
+      } else {
+        // console.log(docs)
+        return docs.length;
+      }
+    });
+    // console.log("here")
+    // console.log(fullUsers)
   }
 
   async getAcceptAnswer(){
