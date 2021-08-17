@@ -10,7 +10,6 @@ const questionSchema = new mongoose.Schema({
     view_count: Number,
     tags: [String],
     creation_date: Date,
-    answers: [answer],
     owner: [user]
 });
 
