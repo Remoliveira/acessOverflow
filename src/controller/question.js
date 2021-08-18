@@ -25,8 +25,11 @@ class QuestionC {
           view_count,
           tags,
           creation_date,
-          owner
+          owner,
+          link,
+          score
         } = rawQuestions[i];
+        const { user_id } = owner;
           questions.push({question_id,
             title,
             answer_count,
@@ -34,7 +37,10 @@ class QuestionC {
             view_count,
             tags,
             creation_date,
-            owner
+            user_id,
+            link,
+            site,
+            score
           });
         if( is_answered == true){
           this.answeredQuestions.push(question_id)
@@ -80,7 +86,9 @@ class QuestionC {
 
           let { answer_id, question_id, is_accepted, score, creation_date, owner } = answer;
 
-          answers.push({ answer_id, question_id, is_accepted, score, creation_date, owner });
+          const { user_id } = owner;
+
+          answers.push({ answer_id, question_id, is_accepted, score, creation_date, user_id });
 
           this.users.push(owner.user_id)
         }
@@ -141,7 +149,7 @@ class QuestionC {
         return docs.length;
       }
     });
-    // console.log("here")
+    console.log("finish")
     // console.log(fullUsers)
   }
 

@@ -8,10 +8,10 @@ const userSchema = mongoose.Schema({
   diplay_name: String,
   link: String,
   is_employee: String,
-  badge_counts: [{bronze: Number,
+  badge_counts: {bronze: Number,
             silver: Number,
             gold: Number
-  }]
+  }
 });
 
 module.exports = userSchema;

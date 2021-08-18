@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const answer = require("../schemas/answer")
-const user = require("../schemas/user")
 
 const questionSchema = new mongoose.Schema({
     question_id: Number,
@@ -10,7 +8,10 @@ const questionSchema = new mongoose.Schema({
     view_count: Number,
     tags: [String],
     creation_date: Date,
-    owner: [user]
+    user_id: Number,
+    link: String,
+    site: String,
+    score: Number
 });
 
 module.exports = questionSchema;
