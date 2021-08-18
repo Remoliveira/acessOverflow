@@ -12,7 +12,7 @@ class QuestionC {
   }
 
   async many(site){
-    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
+    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=1609459200`
     try{
       const rawQuestions = await getData(url);
       let questions = [];
@@ -55,14 +55,14 @@ class QuestionC {
       this.getAnswers(site)
 
 
-      await Question.insertMany(questions, (err, docs) =>{
-        if(err) {
-          return err;
-        } else {
-          // console.log(docs)
-          return docs.length;
-        }
-      });
+      // await Question.insertMany(questions, (err, docs) =>{
+      //   if(err) {
+      //     return err;
+      //   } else {
+      //     // console.log(docs)
+      //     return docs.length;
+      //   }
+      // });
 
     } catch(e){
       cosole.log(e);
@@ -95,14 +95,14 @@ class QuestionC {
         // console.log(answers)
 
 
-        await Answer.insertMany(answers, (err, docs) =>{
-          if(err) {
-            return err;
-          } else {
-            // console.log(docs)
-            return docs.length;
-          }
-        });
+        // await Answer.insertMany(answers, (err, docs) =>{
+        //   if(err) {
+        //     return err;
+        //   } else {
+        //     // console.log(docs)
+        //     return docs.length;
+        //   }
+        // });
 
 
       }catch(err){
@@ -141,14 +141,14 @@ class QuestionC {
 
     }
 
-    await User.insertMany(fullUsers, (err, docs) =>{
-      if(err) {
-        return err;
-      } else {
-        // console.log(docs)
-        return docs.length;
-      }
-    });
+    // await User.insertMany(fullUsers, (err, docs) =>{
+    //   if(err) {
+    //     return err;
+    //   } else {
+    //     // console.log(docs)
+    //     return docs.length;
+    //   }
+    // });
     console.log("finish")
     // console.log(fullUsers)
   }
