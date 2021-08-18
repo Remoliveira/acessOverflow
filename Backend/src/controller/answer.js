@@ -25,6 +25,10 @@ class AnswerC {
   async retrieve(filter){
     return await Answer.find(filter);
   }
+
+  async delete(filter){
+    await Answer.deleteMany(filter);
+  }
 }
 
 module.exports = new AnswerC();

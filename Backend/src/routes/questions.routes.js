@@ -12,14 +12,28 @@ QuestionRouter.get("/", (req, res) => {
 
 QuestionRouter.post("/", async (req, res) => {
   const { site } = req.body
-  while(true){
-    for(const single of site){
-      
-      QuestionC.many(single)
-      .then((result) => {res.status(201).json({message: `${result} documents added`});})
-      .catch((result) => {res.status(400).json({error: result})})
-    }
+  const date = {
+    from: 1628380800,
+    to: 1628985600
   }
-})
+  while(true){
+  let result;
+    for(const single of site){
+
+      result = await QuestionC.many(single, date);
+        console.log("finish", result);
+    }
+    date.from -= 604800;
+    date.to -= 604800;
+  }
+      res.status(201).json(result);
+});
+
+QuestionRouter.delete('/', (req, res) => {
+  const filter = req.body;
+  QuestionC.delete(filter)
+  .then((resolve) => {res.json({resolve})})
+  .catch((reject) => {res.status(400).json({error: reject})});
+});
 
 module.exports = QuestionRouter;

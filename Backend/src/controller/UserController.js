@@ -38,6 +38,10 @@ class UserController{
     async retrieve(filter){
       return await User.find(filter);
     }
+
+    async delete(filter){
+      await User.deleteMany(filter);
+    }
 }
 
 module.exports = UserController;
