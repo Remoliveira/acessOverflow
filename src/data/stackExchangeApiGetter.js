@@ -3,8 +3,14 @@ const axios = require('axios');
 const getData = async (url) =>{
   try{
     const { data } = await axios.get(url);
+    const { quota_remaining } = data;
     
-    return data.items;
+    if(quota_remaining){
+      return data.items;
+    }else{
+
+      return false
+    }
   } catch (e){
     return e;
   }

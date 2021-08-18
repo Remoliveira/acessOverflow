@@ -1,6 +1,5 @@
 const express = require("express");
-const questions = require("../data/stackExchangeApiGetter");
-const QuestionC = require('../controller/question');
+const QuestionC = require('../controller/questionController');
 
 const QuestionRouter = express.Router();
 
@@ -12,11 +11,15 @@ QuestionRouter.get("/", (req, res) => {
 })
 
 QuestionRouter.post("/", async (req, res) => {
-  const {site} = req.body
-  QuestionC.many(site)
-  .then((result) => {res.status(201).json({message: `${result} documents added`});})
-  .catch((result) => {res.status(400).json({error: result})})
-
+  const { site } = req.body
+  while(true){
+    for(const single of site){
+      
+      QuestionC.many(single)
+      .then((result) => {res.status(201).json({message: `${result} documents added`});})
+      .catch((result) => {res.status(400).json({error: result})})
+    }
+  }
 })
 
 module.exports = QuestionRouter;
