@@ -23,4 +23,12 @@ UsersRouter.post("/", (req, res) => {
     res.json({result})
 });
 
+UsersRouter.delete('/', (req, res) => {
+  const filter = req.body;
+  userController = new UserController();
+  userController.delete(filter)
+  .then((resolve) => {res.json({resolve})})
+  .catch((reject) => {res.status(400).json({error: reject})});
+});
+
 module.exports = UsersRouter;

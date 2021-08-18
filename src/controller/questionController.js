@@ -5,17 +5,17 @@ const User = require("../models/user");
 
 class QuestionC {
 
-  constructor(){
-
-    this.answeredQuestions = [];
-    this.users = []
-  }
-
-  async many(site){
-    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
+  async many(site, date){
+    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=${date.from}&todate=${date.to}`
     try{
       const rawQuestions = await getData(url);
+      if(rawQuestions.isAxiosError){
+        console.log('error questions')
+        return;
+      }
       let questions = [];
+      let answeredQuestions = [];
+      let users = [];
 
       for(let i = 0; i < rawQuestions.length; i++){
         let {question_id,
@@ -42,18 +42,16 @@ class QuestionC {
             site,
             score
           });
-        if( is_answered == true){
-          this.answeredQuestions.push(question_id)
-        }
-        // console.log(owner.user_id)
-        this.users.push(owner.user_id)
+
+          answeredQuestions.push(question_id);
+
+        users.push(owner.user_id)
 
       }
-      setTimeout(() => {
-        // console.log("-------------") 
-      }, 5000);
-      this.getAnswers(site)
 
+      await this.delay(5000);
+
+      await this.getAnswers(site, answeredQuestions, users, date);
 
       await Question.insertMany(questions, (err, docs) =>{
         if(err) {
@@ -68,20 +66,21 @@ class QuestionC {
       cosole.log(e);
       return e;
     }
+
   }
 
-  async getAnswers(site){
+  async getAnswers(site, questions, users, date){
 
-    for(let single of this.answeredQuestions){
-
-      const urlAnswers = `https://api.stackexchange.com/2.3/questions/${single}/answers?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default`
-      // console.log(single)
-
+      const urlAnswers = `https://api.stackexchange.com/2.3/questions/${questions.join(';')}/answers?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=${date.from}&todate=${date.to}`
       try{
 
         let answers = []
 
         const rawAnswers = await getData(urlAnswers);
+        if(rawAnswers.isAxiosError){
+          console.log('error answers')
+          return;
+        }
         for(let answer of rawAnswers){
 
           let { answer_id, question_id, is_accepted, score, creation_date, owner } = answer;
@@ -90,7 +89,7 @@ class QuestionC {
 
           answers.push({ answer_id, question_id, is_accepted, score, creation_date, user_id });
 
-          this.users.push(owner.user_id)
+          users.push(owner.user_id)
         }
         // console.log(answers)
 
@@ -104,52 +103,51 @@ class QuestionC {
           }
         });
 
-
       }catch(err){
         console.log(err)
       }
-    }
-    setTimeout(() => {
-      // console.log("-------------")  
-    }, 5000);
-    this.getUsers(site)
+      await this.delay(5000);
+      await this.getUsers(site, users, date)
   }
 
-  async getUsers(site){
+  async getUsers(site, users, date){
 
     let fullUsers = [];
 
-    for(let id of this.users){
-      console.log(id)
-      const urlUsers = `https://api.stackexchange.com/2.3/users/${id}?key=xwgkMlxkdZODgnbso7g77Q((&order=desc&sort=reputation&site=${site}`
+      // console.log(id)
+        const urlUsers = `https://api.stackexchange.com/2.3/users/${users.join(';')}?key=xwgkMlxkdZODgnbso7g77Q((&order=desc&sort=reputation&site=${site}&fromdate=${date.from}&todate=${date.to}`
 
-      try{
+        try{
 
-        
-        const rawUsers = await getData(urlUsers)
 
-        console.log(rawUsers)
+          const rawUsers = await getData(urlUsers)
+            if(rawUsers.isAxiosError){
+              console.log('error users')
+              return;
+            }
+            // console.log(rawUsers)
+            for(const single of rawUsers){
+            let { user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link } = single;
+            fullUsers.push({ user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link })
+          }
+          // console.log('user:', user_id)
 
-        let { user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link } = rawUsers[0];
-        fullUsers.push({ user_id, is_employee, reputation, accept_rate, badge_counts, type, display_name, link })
+        }catch(err){
+          console.log(err)
+        }
+          await User.insertMany(fullUsers, (err, docs) =>{
+            if(err) {
+              return err;
+            } else {
+              // console.log(docs)
+              return docs.length;
+            }
+          });
 
-        // console.log(user_id)
+        await this.delay(5000);
 
-      }catch(err){
-        console.log(err)
-      }
 
-    }
 
-    await User.insertMany(fullUsers, (err, docs) =>{
-      if(err) {
-        return err;
-      } else {
-        // console.log(docs)
-        return docs.length;
-      }
-    });
-    console.log("finish")
     // console.log(fullUsers)
   }
 
@@ -163,6 +161,21 @@ class QuestionC {
     return await Question.find(filter);
   }
 
+  async delete(filter){
+    await Question.deleteMany(filter);
+  }
+
+  delay(n) {
+   n = n || 2000;
+   return new Promise(done => {
+     setTimeout(() => {
+       done();
+     }, n);
+   });
+ }
+
 }
+
+
 
 module.exports= new QuestionC();

@@ -16,4 +16,11 @@ AnswersRouter.post('/', (req, res) => {
   res.json({message: `${result} documents added`})
 });
 
+AnswersRouter.delete('/', (req, res) => {
+  const filter = req.body;
+  AnswerC.delete(filter)
+  .then((resolve) => {res.json({resolve})})
+  .catch((reject) => {res.status(400).json({error: reject})});
+});
+
 module.exports = AnswersRouter;
