@@ -9,9 +9,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class UserComponent implements OnInit {
 
-  private newUser = User;
-  private users = new Array<User>();
-  private usersFiltered = new Array<User>();
+  public users = new Array<User>();
+  
+  public usersFiltered = new Array<User>();
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
   ngOnInit(){
 
 
-    return this.http.get<User[]>("http://localhost:3333/users").subscribe(users => this.users = users);
+    // return this.http.get<User[]>("http://localhost:3333/users").subscribe(users => this.users = users);
 
   }
 
@@ -38,14 +38,28 @@ export class UserComponent implements OnInit {
 }
 
 export class User{
-    badge_counts = {
+  docs = {
+
+    badge_counts: {
       bronze: Number,
       silver: Number,
       gold: Number,
-  };
-  user_id: Number;
-  is_employee: Number;
-  _id: String;
-  reputation: String;
-  link: String;
+  },
+  user_id: Number,
+  is_employee: Number,
+  _id: String,
+  reputation: String,
+  link: String,
+  }
 }
+// badge_counts= {
+//   bronze: Number,
+//   silver: Number,
+//   gold: Number,
+// };
+// user_id: Number;
+// is_employee: Number;
+// _id: String;
+// reputation: String;
+// link: String;
+// }

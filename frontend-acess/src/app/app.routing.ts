@@ -1,3 +1,5 @@
+import { AnswersComponent } from './answers/answers.component';
+import { QuestionsComponent } from './questions/questions.component';
 import { UserComponent } from './user/user.component';
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -19,6 +21,14 @@ export const routes: Routes = [
   {
     path:'users',
     component: UserComponent,
+  },
+  {
+    path:'questions',
+    component: QuestionsComponent,
+  },
+  {
+    path:'answers',
+    component: AnswersComponent,
   },
   {
     path: '404',

@@ -16,5 +16,15 @@ export const navItems: INavData[] = [
     url: '/users',
     icon: 'icon-mouse'
   },
+  {
+    name: 'Questions',
+    url: '/questions',
+    icon: 'icon-mouse'
+  },
+  {
+    name: 'Ansers',
+    url: '/answers',
+    icon: 'icon-mouse'
+  },
   
 ];

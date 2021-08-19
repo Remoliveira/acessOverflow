@@ -53,9 +53,8 @@
               <tr>
                 
                 <th>Usuário</th>
-                <th>Reputação</th>
-                
-                <th class>Score</th>
+                <th>Reputação</th>   
+    
                 <th>Link</th>
               </tr>
             </thead>
@@ -63,7 +62,6 @@
               <tr *ngFor="let user of users">
                 <td class="text-center">{{user.user_id}}</td>
                 <td>{{user.reputation}}</td>
-                <td>{{user.score}}</td>
                 <td>{{user.link}}</td>
               </tr>
             </tbody>

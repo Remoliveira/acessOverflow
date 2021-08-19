@@ -17,7 +17,7 @@ UsersRouter.get("/:name/:value", (req, res) => {
   }
   userController = new UserController();
   userController.retrieve(filter)
-  .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
+  .then((resolve) => {res.json(resolve)})
   .catch((reject) => {res.status(400).json({error: reject})});
 })
 
