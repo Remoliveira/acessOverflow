@@ -45,6 +45,8 @@ import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { AnswersComponent } from './answers/answers.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -62,6 +64,10 @@ import { AnswersComponent } from './answers/answers.component';
     ChartsModule,
     IconModule,
     IconSetModule.forRoot(),
+    HttpClientModule,
+    FormsModule,
+    BrowserModule,
+    
   ],
   declarations: [
     AppComponent,
@@ -72,7 +78,8 @@ import { AnswersComponent } from './answers/answers.component';
     RegisterComponent,
     UserComponent,
     QuestionsComponent,
-    AnswersComponent
+    AnswersComponent,
+    UserComponent
   ],
   providers: [
     {
@@ -80,7 +87,11 @@ import { AnswersComponent } from './answers/answers.component';
       useClass: HashLocationStrategy
     },
     IconSetService,
+    UserComponent,
+    AnswersComponent,
+    QuestionsComponent
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
+  
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { UserComponent } from './user/user.component';
+import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 // Import Containers
@@ -14,6 +15,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  },
+  {
+    path:'users',
+    component: UserComponent,
   },
   {
     path: '404',
@@ -50,10 +55,7 @@ export const routes: Routes = [
       title: 'Home'
     },
     children: [
-      {
-        path: 'base',
-        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
-      },
+   
       {
         path: 'buttons',
         loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
