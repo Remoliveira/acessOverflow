@@ -162,8 +162,35 @@ class QuestionC {
   }
 
   async sorted(params){
-    const {sortBy, limit, filter} = params;
+    const {sortBy, filter, limit} = params;
     return await Question.find(filter).sort([[sortBy, -1]]).limit(limit)
+  }
+
+  async aggre(params){
+    const {limit, site} = params
+  return Question.aggregate(
+      [
+        {"$match": {"site": site}},
+        // Unwinding pipeline
+          {"$unwind": {
+            "path": "$tags"
+            }
+          },
+          // Grouping pipeline
+          { "$group": {
+              "_id": '$tags',
+              "tagCount": { "$sum": 1 }
+          }},
+          // Sorting pipeline
+          { "$sort": { "tagCount": -1 } },
+          {"$set": {
+            "tag": "$_id",
+            "_id": "$$REMOVE"
+          }}
+
+
+      ]
+    ).limit(limit);
   }
 
   async delete(filter){
