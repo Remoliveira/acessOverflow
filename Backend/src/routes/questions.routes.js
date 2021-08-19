@@ -3,22 +3,29 @@ const QuestionC = require('../controller/questionController');
 
 const QuestionRouter = express.Router();
 
-QuestionRouter.get("/", (req, res) => {
-  const filter = req.body;
+QuestionRouter.get("/:name/:value", (req, res) => {
+  const {name, value} = req.params;
+  const {queryParam} = req.query;
+  let filter;
+  if(queryParam){
+    filter = {[name]: {[queryParam]: value}};
+  }else{
+    filter = {[name]: value};
+  }
   QuestionC.retrieve(filter)
   .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
   .catch((reject) => {res.status(400).json({error: reject})});
 });
 
-QuestionRouter.get('/sorted', async (req, res) => {
-  const params = req.body;
+QuestionRouter.get('/sorted/:name/:value', async (req, res) => {
+  const {name, value} = req.params;
+  let params = {...req.query, [name]: value};
   const docs = await QuestionC.sorted(params);
   res.json({docsLength: docs.length, docs: docs});
 });
 
-QuestionRouter.get('/aggre', async (req, res) => {
-  const params = req.body;
-  const docs = await QuestionC.aggre(params);
+QuestionRouter.get('/aggre/:site/:limit', async (req, res) => {
+  const docs = await QuestionC.aggre(req.params);
   res.json(docs);
 });
 

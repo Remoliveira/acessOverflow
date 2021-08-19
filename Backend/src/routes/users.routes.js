@@ -3,16 +3,42 @@ const UserController = require("../controller/UserController");
 
 const UsersRouter = express.Router();
 
-UsersRouter.get("/", (req, res) => {
-  const filter = req.body;
+UsersRouter.get("/:name/:value", (req, res) => {
+  let {name, value} = req.params;
+  const {queryParam, subDoc} = req.query;
+  if(subDoc){
+    name += '.' + subDoc;
+  }
+  let filter;
+  if(queryParam){
+    filter = {[name]: {[queryParam]: value}};
+  }else{
+    filter = {[name]: value};
+  }
   userController = new UserController();
   userController.retrieve(filter)
   .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
   .catch((reject) => {res.status(400).json({error: reject})});
 })
 
-UsersRouter.get('/sorted', async (req, res) => {
-  const params = req.body;
+UsersRouter.get('/sorted/:name/:value', async (req, res) => {
+  let {name, value} = req.params;
+  let {queryParam, sortBy, subDocF, subDocS, limit} = req.query;
+  if(!sortBy) return res.status(400).json({message: 'coloca o sordBy troxa'});
+  if(subDocF){
+    name += '.' + subDocF;
+  }
+  if(subDocS){
+   sortBy += '.' + subDocS;
+  }
+  console.log(sortBy)
+  let filter;
+  if(queryParam){
+    filter = {[name]: {[queryParam]: value}};
+  }else{
+    filter = {[name]: value};
+  }
+  const params = {sortBy, filter, limit}
   try{
     const userController = new UserController();
     const docs = await userController.sorted(params);
