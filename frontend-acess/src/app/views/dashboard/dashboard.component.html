@@ -9,13 +9,7 @@
         </div><!--/.col-->
       </div><!--/.row-->
       <div class="chart-wrapper" style="height:300px;margin-top:40px;">
-        <!-- <canvas baseChart class="chart"
-        [datasets]="mainChartData"
-        [labels]="mainChartLabels"
-        [options]="mainChartOptions"
-        [colors]="mainChartColours"
-        [legend]="mainChartLegend"
-        [chartType]="mainChartType"></canvas> -->
+        <img src="../../../assets/img/bdDocsPic.png" alt="docs">
       </div>
     </div>
     <div class="card-footer">
@@ -46,140 +40,31 @@
       </div>
     </div>
   </div>
-  <!--/.card-->
-  <div class="row">
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-facebook">
-          <i class="fa "></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="brandBoxChartData1"
-            [labels]="brandBoxChartLabels"
-            [options]="brandBoxChartOptions"
-            [colors]="brandBoxChartColours"
-            [legend]="brandBoxChartLegend"
-            [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">89k</div>
-            <div class="text-uppercase text-muted small">friends</div>
-          </div>
-          <div>
-            <div class="text-value">459</div>
-            <div class="text-uppercase text-muted small">feeds</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-twitter">
-          <i class="fa fa-twitter"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="brandBoxChartData2"
-            [labels]="brandBoxChartLabels"
-            [options]="brandBoxChartOptions"
-            [colors]="brandBoxChartColours"
-            [legend]="brandBoxChartLegend"
-            [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">973k</div>
-            <div class="text-uppercase text-muted small">followers</div>
-          </div>
-          <div>
-            <div class="text-value">1.792</div>
-            <div class="text-uppercase text-muted small">tweets</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-linkedin">
-          <i class="fa fa-linkedin"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="brandBoxChartData3"
-            [labels]="brandBoxChartLabels"
-            [options]="brandBoxChartOptions"
-            [colors]="brandBoxChartColours"
-            [legend]="brandBoxChartLegend"
-            [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">500+</div>
-            <div class="text-uppercase text-muted small">contacts</div>
-          </div>
-          <div>
-            <div class="text-value">292</div>
-            <div class="text-uppercase text-muted small">feeds</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-    <div class="col-sm-6 col-lg-3">
-      <div class="brand-card">
-        <div class="brand-card-header bg-google-plus">
-          <i class="fa fa-google-plus"></i>
-          <div class="chart-wrapper">
-            <canvas baseChart class="chart"
-            [datasets]="brandBoxChartData4"
-            [labels]="brandBoxChartLabels"
-            [options]="brandBoxChartOptions"
-            [colors]="brandBoxChartColours"
-            [legend]="brandBoxChartLegend"
-            [chartType]="brandBoxChartType"></canvas>
-          </div>
-        </div>
-        <div class="brand-card-body">
-          <div>
-            <div class="text-value">894</div>
-            <div class="text-uppercase text-muted small">followers</div>
-          </div>
-          <div>
-            <div class="text-value">92</div>
-            <div class="text-uppercase text-muted small">circles</div>
-          </div>
-        </div>
-      </div>
-    </div><!--/.col-->
-  </div><!--/.row-->
   <div class="row">
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          Traffic &amp; Sales
+          Informações de Usuários
         </div>
         <div class="card-body">
 
-          <table class="table table-responsive-sm table-hover table-outline mb-0">
+          <table class="table table-responsive-sm table-hover table-outline mb-0" >
             <thead class="thead-light">
               <tr>
-                <th class="text-center"><i class="icon-people"></i></th>
+                
                 <th>Usuário</th>
-                <th class="text-center">Site</th>
-                <th>Usage</th>
-                <th class="text-center">Score</th>
-                <th>Activity</th>
+                <th>Reputação</th>
+                
+                <th class>Score</th>
+                <th>Link</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td class="text-center">
-                  <div class="avatar">
-                    <img src="assets/img/avatars/1.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
-                    <span class="avatar-status badge-success"></span>
-                  </div>
-                </td>
+              <tr *ngFor="let user of users">
+                <td class="text-center">{{user.user_id}}</td>
+                <td>{{user.reputation}}</td>
+                <td>{{user.score}}</td>
+                <td>{{user.link}}</td>
               </tr>
             </tbody>
           </table>

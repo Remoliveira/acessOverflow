@@ -44,6 +44,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { UserComponent } from './user/user.component';
 import { QuestionsComponent } from './questions/questions.component';
+import { AnswersComponent } from './answers/answers.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { QuestionsComponent } from './questions/questions.component';
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    AnswersComponent
   ],
   providers: [
     {

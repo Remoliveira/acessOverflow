@@ -11,11 +11,16 @@ export class UserComponent implements OnInit {
 
   private newUser = User;
   private users = new Array<User>();
+  private usersFiltered = new Array<User>();
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
+
+
+    return this.http.get<User[]>("http://localhost:3333/users").subscribe(users => this.users = users);
+
   }
 
   getUser(filter: string, orderBy: string, limit: number){
@@ -26,7 +31,7 @@ export class UserComponent implements OnInit {
     params.set('orderBy',orderBy)
     params.set('limit',limit.toString())
 
-    return this.http.get<User[]>("http://localhost:3333/users/sorted",{ params }).subscribe(users => this.users = users)
+    return this.http.get<User[]>("http://localhost:3333/users/sorted",{ params }).subscribe(usersFiltered => this.usersFiltered = usersFiltered)
    
   }
 
