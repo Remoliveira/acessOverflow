@@ -158,12 +158,12 @@ class QuestionC {
   //pegar resposta aceita e usuarios
 
   async retrieve(filter){
-    return Question.find(filter, null , {sort: {}});
+    return Question.find(filter);
   }
 
   async sorted(params){
     const {sortBy, filter, limit} = params;
-    return await Question.find(filter).sort([[sortBy, -1]]).limit(limit)
+    return await Question.find(filter).sort([[sortBy, -1]]).limit(Number(limit))
   }
 
   async aggre(params){
@@ -190,7 +190,7 @@ class QuestionC {
 
 
       ]
-    ).limit(limit);
+    ).limit(Number(limit));
   }
 
   async delete(filter){

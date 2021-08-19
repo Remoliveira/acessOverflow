@@ -41,7 +41,7 @@ class UserController{
 
     async sorted(params){
       const {sortBy, limit, filter} = params;
-      return await User.find(filter).sort([[sortBy, -1]]).limit(limit)
+      return await User.find(filter).sort([[sortBy, -1]]).limit(Number(limit))
     }
 
 
