@@ -5,19 +5,8 @@ const User = require("../models/user");
 
 class QuestionC {
 
-<<<<<<< HEAD:Backend/src/controller/questionController.js
-  constructor(){
-
-    this.answeredQuestions = [];
-    this.users = []
-  }
-
-  async many(site){
-    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=1609459200`
-=======
   async many(site, date){
     const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=${date.from}&todate=${date.to}`
->>>>>>> 2986ef54245cde51a963f5003207649c1415ba25:src/controller/questionController.js
     try{
       const rawQuestions = await getData(url);
       if(rawQuestions.isAxiosError){
@@ -64,14 +53,14 @@ class QuestionC {
 
       await this.getAnswers(site, answeredQuestions, users, date);
 
-      // await Question.insertMany(questions, (err, docs) =>{
-      //   if(err) {
-      //     return err;
-      //   } else {
-      //     // console.log(docs)
-      //     return docs.length;
-      //   }
-      // });
+      await Question.insertMany(questions, (err, docs) =>{
+        if(err) {
+          return err;
+        } else {
+          // console.log(docs)
+          return docs.length;
+        }
+      });
 
     } catch(e){
       cosole.log(e);
@@ -105,14 +94,14 @@ class QuestionC {
         // console.log(answers)
 
 
-        // await Answer.insertMany(answers, (err, docs) =>{
-        //   if(err) {
-        //     return err;
-        //   } else {
-        //     // console.log(docs)
-        //     return docs.length;
-        //   }
-        // });
+        await Answer.insertMany(answers, (err, docs) =>{
+          if(err) {
+            return err;
+          } else {
+            // console.log(docs)
+            return docs.length;
+          }
+        });
 
       }catch(err){
         console.log(err)
@@ -159,18 +148,6 @@ class QuestionC {
 
 
 
-<<<<<<< HEAD:Backend/src/controller/questionController.js
-    // await User.insertMany(fullUsers, (err, docs) =>{
-    //   if(err) {
-    //     return err;
-    //   } else {
-    //     // console.log(docs)
-    //     return docs.length;
-    //   }
-    // });
-    console.log("finish")
-=======
->>>>>>> 2986ef54245cde51a963f5003207649c1415ba25:src/controller/questionController.js
     // console.log(fullUsers)
   }
 
@@ -181,7 +158,12 @@ class QuestionC {
   //pegar resposta aceita e usuarios
 
   async retrieve(filter){
-    return await Question.find(filter);
+    return Question.find(filter, null , {sort: {}});
+  }
+
+  async sorted(params){
+    const {sortBy, limit, filter} = params;
+    return await Question.find(filter).sort([[sortBy, -1]]).limit(limit)
   }
 
   async delete(filter){

@@ -11,6 +11,18 @@ UsersRouter.get("/", (req, res) => {
   .catch((reject) => {res.status(400).json({error: reject})});
 })
 
+UsersRouter.get('/sorted', async (req, res) => {
+  const params = req.body;
+  try{
+    const userController = new UserController();
+    const docs = await userController.sorted(params);
+    res.json({length: docs.length, docs});
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+});
+
 
 UsersRouter.post("/", (req, res) => {
 
