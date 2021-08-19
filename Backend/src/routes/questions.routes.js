@@ -8,7 +8,13 @@ QuestionRouter.get("/", (req, res) => {
   QuestionC.retrieve(filter)
   .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
   .catch((reject) => {res.status(400).json({error: reject})});
-})
+});
+
+QuestionRouter.get('/sorted', async (req, res) => {
+  const params = req.body;
+  const docs = await QuestionC.sorted(params);
+  res.json({docsLength: docs.length, docs: docs});
+});
 
 QuestionRouter.post("/", async (req, res) => {
   const { site } = req.body
