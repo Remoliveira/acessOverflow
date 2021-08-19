@@ -5,7 +5,10 @@ const UsersRouter = express.Router();
 
 UsersRouter.get("/:name/:value", (req, res) => {
   let {name, value} = req.params;
-  const {queryParam, subDoc} = req.query;
+  let {queryParam, subDoc, limit} = req.query;
+  if(!limit){
+    limit = 10;
+  }
   if(subDoc){
     name += '.' + subDoc;
   }
@@ -15,8 +18,9 @@ UsersRouter.get("/:name/:value", (req, res) => {
   }else{
     filter = {[name]: value};
   }
+  const params = {limit, filter}
   userController = new UserController();
-  userController.retrieve(filter)
+  userController.retrieve(params)
   .then((resolve) => {res.json({docsLength: resolve.length ,docs:resolve})})
   .catch((reject) => {res.status(400).json({error: reject})});
 })
@@ -31,7 +35,9 @@ UsersRouter.get('/sorted/:name/:value', async (req, res) => {
   if(subDocS){
    sortBy += '.' + subDocS;
   }
-  console.log(sortBy)
+  if(!limit){
+    limit = 10;
+  }
   let filter;
   if(queryParam){
     filter = {[name]: {[queryParam]: value}};
