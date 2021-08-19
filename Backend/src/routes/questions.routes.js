@@ -16,6 +16,12 @@ QuestionRouter.get('/sorted', async (req, res) => {
   res.json({docsLength: docs.length, docs: docs});
 });
 
+QuestionRouter.get('/aggre', async (req, res) => {
+  const params = req.body;
+  const docs = await QuestionC.aggre(params);
+  res.json(docs);
+});
+
 QuestionRouter.post("/", async (req, res) => {
   const { site } = req.body
   const date = {

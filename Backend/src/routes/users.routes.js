@@ -16,7 +16,7 @@ UsersRouter.get('/sorted', async (req, res) => {
   try{
     const userController = new UserController();
     const docs = await userController.sorted(params);
-    res.json({length: docs.length, docs});
+    res.json({docsLength: docs.length, docs});
   } catch (error) {
     console.log(error);
     res.status(400).json(error);

@@ -44,6 +44,7 @@ class UserController{
       return await User.find(filter).sort([[sortBy, -1]]).limit(limit)
     }
 
+
     async delete(filter){
       await User.deleteMany(filter);
     }
