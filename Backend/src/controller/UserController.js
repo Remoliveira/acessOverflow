@@ -35,8 +35,9 @@ class UserController{
 
     }
 
-    async retrieve(filter){
-      return await User.find(filter);
+    async retrieve(params){
+      const {filter, limit} = params;
+      return await User.find(filter).limit(Number(limit));
     }
 
     async sorted(params){

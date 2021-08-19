@@ -38,28 +38,14 @@ export class UserComponent implements OnInit {
 }
 
 export class User{
-  docs = {
-
-    badge_counts: {
-      bronze: Number,
-      silver: Number,
-      gold: Number,
-  },
-  user_id: Number,
-  is_employee: Number,
-  _id: String,
-  reputation: String,
-  link: String,
-  }
+  badge_counts= {
+    bronze: Number,
+    silver: Number,
+    gold: Number,
+  };
+  user_id?: Number;
+  is_employee?: Number;
+  _id?: String;
+  reputation?: String;
+  link?: String;
 }
-// badge_counts= {
-//   bronze: Number,
-//   silver: Number,
-//   gold: Number,
-// };
-// user_id: Number;
-// is_employee: Number;
-// _id: String;
-// reputation: String;
-// link: String;
-// }
