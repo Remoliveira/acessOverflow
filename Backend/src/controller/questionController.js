@@ -5,19 +5,16 @@ const User = require("../models/user");
 
 class QuestionC {
 
-<<<<<<< HEAD:Backend/src/controller/questionController.js
   constructor(){
 
     this.answeredQuestions = [];
     this.users = []
   }
 
-  async many(site){
-    const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=1609459200`
-=======
+
   async many(site, date){
     const url = `https://api.stackexchange.com/2.2/questions?key=xwgkMlxkdZODgnbso7g77Q((&site=${site}&order=desc&sort=activity&filter=default&fromdate=${date.from}&todate=${date.to}`
->>>>>>> 2986ef54245cde51a963f5003207649c1415ba25:src/controller/questionController.js
+
     try{
       const rawQuestions = await getData(url);
       if(rawQuestions.isAxiosError){
@@ -159,7 +156,7 @@ class QuestionC {
 
 
 
-<<<<<<< HEAD:Backend/src/controller/questionController.js
+
     // await User.insertMany(fullUsers, (err, docs) =>{
     //   if(err) {
     //     return err;
@@ -169,8 +166,8 @@ class QuestionC {
     //   }
     // });
     console.log("finish")
-=======
->>>>>>> 2986ef54245cde51a963f5003207649c1415ba25:src/controller/questionController.js
+
+
     // console.log(fullUsers)
   }
 
